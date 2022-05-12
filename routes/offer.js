@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllOffers, createOffer } from '../controllers/offer.js'
+import { getAllOffers, createOffer, deleteOffer } from '../controllers/offer.js'
 const Offers=express.Router()
 
 
@@ -10,4 +10,6 @@ Offers.get('/', getAllOffers)
 // Creating One
 Offers.post('/',createOffer)
 
+//delete One
+Offers.delete('/:id',deleteOffer)
 export default Offers;

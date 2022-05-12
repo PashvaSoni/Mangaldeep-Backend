@@ -1,6 +1,8 @@
-const express=require('express')
-const mongoose=require('mongoose')
-require('dotenv').config()
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import offerRouter from './routes/offer.js'
+dotenv.config()
 const app=express()
 
 mongoose.connect(process.env.DATABASE_URL)
@@ -26,8 +28,6 @@ app.use((req,res,next)=>{
     next();
 })
 
-
-const offerRouter=require('./routes/offer')
 app.use('/offers',offerRouter)
 
 app.listen(3000,()=>{console.log("server started at port")})

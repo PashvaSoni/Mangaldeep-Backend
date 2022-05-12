@@ -1,4 +1,4 @@
-const mongoose=require('mongoose')
+import mongoose from "mongoose";
 
 // for calculating the one month later date from current date
 function oneMonthFromNow() {
@@ -36,4 +36,5 @@ const offerSchema=new mongoose.Schema({
 
 })
 
-module.exports=mongoose.model('Offer',offerSchema)
+const Offer=mongoose.model('Offer',offerSchema);
+export default Offer;

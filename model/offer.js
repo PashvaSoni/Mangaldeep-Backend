@@ -29,6 +29,14 @@ const offerSchema=new mongoose.Schema({
         type:String,
         required:[true,"Image Url is required !"]
     },
+    targetlink:{
+        type:String,
+        required:[true,"Target Link is required !"]
+    },
+    startdate:{
+        type:Date,
+        default:Date
+    },
     enddate:{
         type:Date,
         default:oneMonthFromNow

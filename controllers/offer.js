@@ -15,7 +15,7 @@ import mongoose from 'mongoose';
 // create a new offer
  export const createOffer=async(req,res)=>{
     const offer=new Offer({
-        title:req.body.title,
+        title:req.body.title.trim(),
         description:req.body.description,
         imageurl:req.body.imageurl,
         targetlink:req.body.targetlink,

@@ -14,24 +14,24 @@ function oneMonthFromNow() {
 const offerSchema=new mongoose.Schema({
     title:{
         type:String,
-        required:[true,"Title is required !"],
-        minlength:[5,'Title should be more than 5 characters.'],
-        maxlength:[50, 'Title should be less than 50 characters.'],
+        required:[true,"Offer Title is required !"],
+        minlength:[5,'Offer Title should be more than 5 characters.'],
+        maxlength:[100, 'Offer Title should be less than 100 characters.'],
     },
     description:{
         type:String,
-        required:[true,"Description is required !"],
-        minlength:[10, 'Description should be more than 10 characters.'],
-        maxlength:[150, 'Description should be less than 150 characters.']
+        required:[true,"Offer Description is required !"],
+        minlength:[10, 'Offer Description should be more than 10 characters.'],
+        maxlength:[250, 'Offer Description should be less than 250 characters.']
         
     },
     imageurl:{
         type:String,
-        required:[true,"Image Url is required !"]
+        required:[true,"Offer Image Url is required !"]
     },
     targetlink:{
         type:String,
-        required:[true,"Target Link is required !"]
+        required:[true,"Offer Target Link is required !"]
     },
     startdate:{
         type:Date,

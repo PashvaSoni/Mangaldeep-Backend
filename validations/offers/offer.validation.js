@@ -2,12 +2,13 @@ import offerValidationSchema from './offer.schema.js';
 
 
 const OfferValidationMiddleware= async(req,res,next)=>{
-    const value =await offerValidationSchema.offer.validate(req.body);
-    if(value.error)
+    const result =offerValidationSchema.offer.validate(req.body);
+    if(result.error)
     {
-        res.status(400).json({success:0,message:value.error.details[0].message.replaceAll('\"',''),data:null});
+        res.status(422).json({success:0,message:result.error.details[0].message.replaceAll('\"',''),data:null});
     }
     else{
+        req.body=result.value;
         next();
     }
 };

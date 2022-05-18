@@ -1,6 +1,5 @@
 import joi from '@hapi/joi';
-import { not } from '@hapi/joi/lib/base';
-
+import commonschema from '../common/common.js'
 
 const productvalidationschema={
     product:joi.object({
@@ -89,6 +88,9 @@ const productvalidationschema={
             .greater(0)
             .positive()
             .required(),
+        category:commonschema.category,
+        class:commonschema.class,
+        occasion:commonschema.ocassion,
         keywords:joi.array()
             .items(
                 joi.string()
@@ -98,6 +100,22 @@ const productvalidationschema={
                 .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
             }))
             .label("Product Keywords")
-            .default([joi.ref('metal'),joi.ref('targetgender')+' '+joi.ref('name'),joi.ref('name'),joi.ref('category'),joi.ref('targetgender')+' '+joi.ref('category'),joi.ref('class')])
+            .default([joi.ref('metal'),joi.ref('targetgender')+' '+joi.ref('name'),joi.ref('name'),joi.ref('category'),joi.ref('targetgender')+' '+joi.ref('category'),joi.ref('class')]),
+        additionals:joi.object()
+            .pattern(
+                //for key validations
+                joi.string()
+                    .lowercase()
+                    .trim()
+                    .min(1)
+                    .required()
+                    .regex(/[${};<>`]/, { invert: true })
+                    .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"}),
+                //for value validations
+                joi.any()
+                    .required()
+                    .regex(/[${};<>`]/, { invert: true })
+                    .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"})
+            )
     })
 }

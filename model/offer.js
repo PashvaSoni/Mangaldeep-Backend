@@ -17,6 +17,7 @@ const offerSchema=new mongoose.Schema({
         required:[true,"Offer Title is required !"],
         minlength:[5,'Offer Title should be more than 5 characters.'],
         maxlength:[100, 'Offer Title should be less than 100 characters.'],
+        unique:true // cant use custom message here since unique is not a validator
     },
     description:{
         type:String,

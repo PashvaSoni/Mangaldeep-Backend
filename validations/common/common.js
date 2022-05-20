@@ -22,6 +22,8 @@ const commonschema = {
             .messages({
                 "string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
             })
+            .min(3)
+            .max(50)
         )
         .min(1) // atleast 1 class should be assigned 
         .required(),
@@ -32,6 +34,8 @@ const commonschema = {
             .trim()
             .lowercase()
             .regex(/[${};<>`]/, { invert: true })
+            .min(3)
+            .max(50)
             .messages({
                 "string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
             })

@@ -15,7 +15,7 @@ import mongoose from 'mongoose';
 // create a new offer
  export const createOffer=async(req,res)=>{
     const offer=new Offer({
-        title:req.body.title.trim(),
+        title:req.body.title,
         description:req.body.description,
         imageurl:req.body.imageurl,
         targetlink:req.body.targetlink,
@@ -26,7 +26,8 @@ import mongoose from 'mongoose';
         const newOffer=await offer.save()
         res.status(201).json({success:1,message:"Offer created successfully",data:newOffer})
     } catch(err){
-        res.status(400).json({success:0,message:err.message,data:null})
+        //If schema contains more than one unique fields than below condition will not work because we cannot identify which field broke the unique rule
+        res.status(400).json({success:0,message:(err.name === 'MongoServerError' && err.code === 11000)?"Offer Title Should be Unique, This Title is already in use.":err.message,data:null})
     }
  };
 

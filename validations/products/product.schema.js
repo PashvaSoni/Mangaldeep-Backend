@@ -91,16 +91,16 @@ const productvalidationschema={
         category:commonschema.category,
         class:commonschema.class,
         occasion:commonschema.ocassion,
-        keywords:joi.array()
-            .items(
-                joi.string()
-                .trim()
-                .lowercase()
-                .regex(/[${};<>`]/, { invert: true })
-                .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
-            }))
-            .label("Product Keywords")
-            .default([joi.ref('metal'),joi.ref('targetgender')+' '+joi.ref('name'),joi.ref('name'),joi.ref('category'),joi.ref('targetgender')+' '+joi.ref('category'),joi.ref('class')]),
+        // keywords:joi.array()
+        //     .items(
+        //         joi.string()
+        //         .trim()
+        //         .lowercase()
+        //         .regex(/[${};<>`]/, { invert: true })
+        //         .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
+        //     }))
+        //     .label("Product Keywords")
+        //     .default([joi.ref('metal'),joi.ref('targetgender')+' '+joi.ref('name'),joi.ref('name'),joi.ref('category'),joi.ref('targetgender')+' '+joi.ref('category'),joi.ref('class')]),
         additionals:joi.object()
             .pattern(
                 //for key validations
@@ -119,3 +119,5 @@ const productvalidationschema={
             )
     })
 }
+
+export default productvalidationschema;

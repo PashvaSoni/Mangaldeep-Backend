@@ -5,7 +5,7 @@ const productvalidationmiddleware=async(req,res,next)=>{
         const results=productvalidationschema.product.validate(req.body);
         if(results.error)
         {
-            res.status(422).json({success:0,message:results.error.details[0],data:null});   
+            res.status(422).json({success:0,message:results.error.details[0].replaceAll('\"',''),data:null});   
         }
         else
         {

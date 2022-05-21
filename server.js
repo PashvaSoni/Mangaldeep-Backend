@@ -2,6 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import offerRouter from './routes/offer.js'
+import productRouter from "./routes/product.js";
+import { categoryRouter, classRouter, occasionRouter } from "./routes/common.js";
+
 dotenv.config()
 const app=express()
 
@@ -28,6 +31,10 @@ app.use((req,res,next)=>{
     next();
 })
 
-app.use('/offers',offerRouter)
+app.use('/offers',offerRouter);
+app.use('/products',productRouter);
+app.use('/categories',categoryRouter);
+app.use('/classes',classRouter);
+app.use('/occasions',occasionRouter);
 
 app.listen(3000,()=>{console.log("server started at port")})

@@ -1,13 +1,27 @@
-import { required } from "@hapi/joi/lib/base";
-import mongoose, { SchemaTypes } from "mongoose";
+import {mongoose} from "mongoose";
+import  SchemaTypes  from "mongoose";
 import {productCategory,productClass,productOccasion} from './common.js'
-function greaterThanZero(val) {
-    return val.length <=0;
-  }
 
 const GENDER_ENUM = ['men','women','kids','unisex'];
 const METAL_ENUM = ['gold','silver','platinum','imitation'];
 const METAL_PURITY_ENUM = ['18KT','22KT','24KT','100%'];
+
+function greaterThanZero(val) {
+    return val >0;
+  }
+
+  const categoryExist=async(val)=>{
+      const ans= await productCategory.exists({_id:val});
+      return ans;
+  }
+
+  const classExist=async(val)=>{
+      return await productClass.exists({_id:val});
+  }
+
+  const occasionExist=async(val)=>{
+      return await productOccasion.exists({_id:val});
+  }
 
 const productSchema =new mongoose.Schema({
     name:{
@@ -26,7 +40,10 @@ const productSchema =new mongoose.Schema({
     imageurl:{
         type:[String],
         required:[true,"Product Image URL is required"],
-        validate:[greaterThanZero,"Atleast 1 Product Image URL is required"],
+        validate:{
+            validator:v => Array.isArray(v) && v.length > 0,
+            message:"Atleast one image for the Product is required"
+        } 
     },
     likes:{
         type:Number,
@@ -40,7 +57,10 @@ const productSchema =new mongoose.Schema({
     },
     targetgender:{
         type:String,
-        enum:[GENDER_ENUM,"Product Target Gender should be one of 'men', 'women', 'kids' or 'unisex' ."],
+        // enum:[GENDER_ENUM,"Product Target Gender should be one of 'men', 'women', 'kids' or 'unisex' ."],
+        enum:{
+            values:GENDER_ENUM,
+            message:"Product Target Gender should be one of 'men', 'women', 'kids' or 'unisex' ."},
         required:[true,"Product Target Gender is required."]
     },
     registrationdate:{
@@ -49,7 +69,10 @@ const productSchema =new mongoose.Schema({
     },
     metal:{
         type:String,
-        enum:METAL_ENUM,
+        enum:{
+            values:METAL_ENUM,
+            message:"Product Metal should be one of 'Gold', 'Silver', 'Platinum' or 'Immitation' ."
+        },
         required:[true,"Product Metal type is required."]
     },
     metalweight:{
@@ -59,14 +82,24 @@ const productSchema =new mongoose.Schema({
     },
     grossweight:{
         type:SchemaTypes.Decimal128,
-        validate:[greaterThanZero,function greaterThanMetalweight() {
-            return this.metalweight>this.grossweight?false:true;
-        },"Product Gross Weight should be greater than 0 and greater than or equal to Product Metal Weight."],
+            validate:[
+                {
+                    validator:greaterThanZero,
+                    message:"Product Gross Weight should be more than 0"
+                }
+            ],
+        // validate:[greaterThanZero,async function greaterThanMetalweight() {
+        //     return await this.metalweight>this.grossweight?false:true;
+        // },"Product Gross Weight should be greater than 0 and greater than or equal to Product Metal Weight."],
         required:[true,"Product Gross Weight is required."],
     },
     metalpurity:{
         type:String,
-        enum:[METAL_PURITY_ENUM,"Product Metal Purity should be one of '18KT', '22KT', '24KT', '100%'."],
+        // enum:[METAL_PURITY_ENUM,"Product Metal Purity should be one of '18KT', '22KT', '24KT', '100%'."],
+        enum:{
+            values:METAL_PURITY_ENUM,
+            message:"Product Metal Purity should be one of '18KT', '22KT', '24KT', '100%'."
+        },
         required:[true,"Product Metal Purity is required."]
     },
     makingcharge:{
@@ -78,7 +111,48 @@ const productSchema =new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Categories',
         // ref:'productCategory'
-        required:[true,"Product Category is required."]
+        required:[true,"Product Category is required."],
+        validate:{
+            validator:categoryExist,
+            message:props=>`No Product Category with ID : ${props.value} exist`
+        }
+    },
+    class:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Classes',
+        required:[true,"Aleast one Product Class is required"],
+        validate:[
+            {
+                validator:v => Array.isArray(v) && v.length > 0,
+                message:"Atleast one Product class is required"
+            },
+            {
+                validator:classExist,
+                message:props=>`No Product Class with ID : ${props.value} exist`
+            }
+        ]
+    },
+    occasion:{
+        type:[mongoose.Schema.Types.ObjectId],
+        ref:'Occasions',
+        required:[true,"Aleast one Product Occasion is required"],
+        validate:[
+            {
+                validator:v => Array.isArray(v) && v.length > 0,
+                message:"Atleast one Product Occasion is required"
+            },
+            {
+                validator:occasionExist,
+                message:props=>`No Product Occasion with ID : ${props.value} exist`
+            }
+        ]
     }
 
-})
+});
+
+// for try to search keywords in prodct name and description
+productSchema.index({name:'text',description:'text'});
+
+const Product=mongoose.model('Products',productSchema);
+
+export default Product;

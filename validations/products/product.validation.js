@@ -5,11 +5,11 @@ const productvalidationmiddleware=async(req,res,next)=>{
         const results=productvalidationschema.product.validate(req.body);
         if(results.error)
         {
-            res.status(422).json({success:0,message:results.error.details[0].replaceAll('\"',''),data:null});   
+            res.status(422).json({success:0,message:results.error.details[0].message.replaceAll('\"',''),data:null});   
         }
         else
         {
-            req.body=results;
+            req.body=results.value;
             next();
         }
     }
@@ -17,7 +17,6 @@ const productvalidationmiddleware=async(req,res,next)=>{
     {
         res.status(500).json({success:0,message:err.message,data:null});
     }
-
-
-
 }
+
+export default productvalidationmiddleware;

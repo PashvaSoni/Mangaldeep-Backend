@@ -2,6 +2,19 @@ import { productCategory, productClass, productOccasion } from "../model/common.
 
 // ------------------------------- Category Controllers ---------------------------------
 
+// get all category
+export const getAllCategories= async(req,res)=>{
+    try{
+        const results= await productCategory.find();
+        res.status(200).json({success:1,message:"Categories Retrieved Successfully",data:results});
+    }
+    catch(err)
+    {
+        res.status(500).json({success:0,message:err.message,data:null});
+    }
+}
+
+
 // create new category
 export const createCategory =async(req,res)=>{
     try{
@@ -19,6 +32,17 @@ export const createCategory =async(req,res)=>{
 
 // ------------------------------- Class Controllers ---------------------------------
 
+// get all classes
+export const getAllClasses= async(req,res)=>{
+    try{
+        const results= await productClass.find();
+        res.status(200).json({success:1,message:"Classes Retrieved Successfully",data:results});
+    }
+    catch(err)
+    {
+        res.status(500).json({success:0,message:err.message,data:null});
+    }
+}
 
 // create new class
 export const createClass =async(req,res)=>{
@@ -36,6 +60,18 @@ export const createClass =async(req,res)=>{
 }
 
 // ------------------------------- Occasion Controllers ---------------------------------
+
+// get all occasions
+export const getAllOccasions= async(req,res)=>{
+    try{
+        const results= await productOccasion.find();
+        res.status(200).json({success:1,message:"Categories Retrieved Successfully",data:results});
+    }
+    catch(err)
+    {
+        res.status(500).json({success:0,message:err.message,data:null});
+    }
+}
 
 // create new occasion
 export const createOccasion =async(req,res)=>{

@@ -1,5 +1,5 @@
 import joi from '@hapi/joi';
-import commonschema from '../common/common.js'
+import commonschema from '../common/common.schema.js'
 
 const productvalidationschema={
     product:joi.object({
@@ -88,9 +88,43 @@ const productvalidationschema={
             .greater(0)
             .positive()
             .required(),
-        category:commonschema.category,
-        class:commonschema.class,
-        occasion:commonschema.ocassion,
+        category:joi.string()
+            .label("Product Category")
+            .trim()
+            .lowercase()
+            .regex(/[${};<>`]/, { invert: true })
+            .messages({ 
+                "string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
+            })
+            .required(),
+        class:joi.array()
+            .label("Product Class")
+            .items(
+                joi.string()
+                .label("Product Class array values")
+                .trim()
+                .lowercase()
+                .regex(/[${};<>`]/, { invert: true })
+                .messages({
+                    "string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
+                })
+            )
+            .label("Product Class")
+            .unique(),
+        occasion:joi.array()
+            .label("Product Occasion")
+            .items(
+                joi.string()
+                .label("Product Occasion array values")
+                .trim()
+                .lowercase()
+                .regex(/[${};<>`]/, { invert: true })
+                .messages({
+                    "string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
+                })
+            )
+            .unique()
+            .min(1) , 
         // keywords:joi.array()
         //     .items(
         //         joi.string()
@@ -101,22 +135,22 @@ const productvalidationschema={
         //     }))
         //     .label("Product Keywords")
         //     .default([joi.ref('metal'),joi.ref('targetgender')+' '+joi.ref('name'),joi.ref('name'),joi.ref('category'),joi.ref('targetgender')+' '+joi.ref('category'),joi.ref('class')]),
-        additionals:joi.object()
-            .pattern(
-                //for key validations
-                joi.string()
-                    .lowercase()
-                    .trim()
-                    .min(1)
-                    .required()
-                    .regex(/[${};<>`]/, { invert: true })
-                    .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"}),
-                //for value validations
-                joi.any()
-                    .required()
-                    .regex(/[${};<>`]/, { invert: true })
-                    .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"})
-            )
+        // additionals:joi.object()
+        //     .pattern(
+        //         //for key validations
+        //         joi.string()
+        //             .lowercase()
+        //             .trim()
+        //             .min(1)
+        //             .required()
+        //             .regex(/[${};<>`]/, { invert: true })
+        //             .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"}),
+        //         //for value validations
+        //         joi.any()
+        //             .required()
+        //             .regex(/[${};<>`]/, { invert: true })
+        //             .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"})
+        //     )
     })
 }
 

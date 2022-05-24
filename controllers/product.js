@@ -2,7 +2,13 @@ import Product from "../model/product.js";
 
 // get all the products
 export const getAllProduct=async(req,res)=>{
-    console.log("get all product called");
+    try{
+        // const results=
+    }
+    catch(err)
+    {
+
+    }
 }
 
 //get product by ID

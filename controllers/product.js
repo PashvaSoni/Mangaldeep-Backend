@@ -3,11 +3,11 @@ import Product from "../model/product.js";
 // get all the products
 export const getAllProduct=async(req,res)=>{
     try{
-        // const results=
+        res.status(200).json({success:1,message:"Products Retrieved Successfully",data:res.paginatedResult})
     }
     catch(err)
     {
-
+        res.status(500).json({success:0,message:err.message,data:null});
     }
 }
 
@@ -25,6 +25,7 @@ export const createProduct=async(req,res)=>{
             imageurl:req.body.imageurl,
             likes:req.body.likes,
             dislikes:req.body.deslikes,
+            popularity:req.body.popularity,
             targetgender:req.body.targetgender,
             registrationdate:req.body.date,
             metal:req.body.metal,

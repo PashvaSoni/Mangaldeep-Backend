@@ -55,6 +55,11 @@ const productSchema =new mongoose.Schema({
         default:0,
         min:[0,"Minimum Product Dislikes should be 0."]
     },
+    popularity:{
+        type:Number,
+        default:0,
+        min:[0,"Minimum Product Popularity should be 0."],
+    },
     targetgender:{
         type:String,
         // enum:[GENDER_ENUM,"Product Target Gender should be one of 'men', 'women', 'kids' or 'unisex' ."],

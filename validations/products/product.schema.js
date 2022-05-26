@@ -43,6 +43,12 @@ const productvalidationschema={
             .positive()
             .default(0)
             .min(0),
+        popularity:joi.number()
+            .label("Product Popularity")
+            .integer() // no floating values
+            .positive()
+            .default(0)
+            .min(joi.ref('likes')),
         targetgender:joi.string()
             .label("Product Targeted Gender")
             .valid('men','women','kids','unisex')

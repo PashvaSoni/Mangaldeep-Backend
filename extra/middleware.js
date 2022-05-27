@@ -3,6 +3,10 @@ import Product from "../model/product.js";
 function productQueryObject(req)
 {
     const queryObj={}
+    if(req.query.search)
+    {
+      queryObj.$text={$search:req.query.search}
+    }
     if(req.query.category)
     {
       queryObj.category=req.query.category;
@@ -19,7 +23,6 @@ function productQueryObject(req)
     {
     queryObj.metal=req.query.metal;
     }
-    
     return queryObj;
 }
 
@@ -69,16 +72,20 @@ export function paginate(model) {
       }
 
       const result = {};
-      result.totaldocs=(await model.countDocuments().exec());
-      if (endIndex < result.totaldocs) {
-        result.next = {
-          page: page + 1,
-        };
+      result.totalDocs=(await model.where(queryObj).count());
+      if (endIndex < result.totalDocs) {
+        result.nextPage = page + 1;
+      }
+      else
+      {
+        result.nextPage =null;
       }
       if (startIndex > 0) {
-        result.previous = {
-          page: page - 1,
-        };
+        result.previousPage =page - 1;
+      }
+      else
+      {
+        result.previousPage=null;
       }
       try {
         result.results = await model.find(queryObj).sort(sortObj).limit(limit).skip(startIndex);

@@ -23,7 +23,7 @@ export const updateProduct = async (req, res) => {
             }
             else {
                 tempproduct.name=req.body.name,
-                tempproduct.description-=req.body.description
+                tempproduct.description=req.body.description
                 tempproduct.imageurl=req.body.imageurl
                 // tempproduct.likes=req.body.likes
                 // tempproduct.dislikes=req.body.deslikes          // no one can directly update 

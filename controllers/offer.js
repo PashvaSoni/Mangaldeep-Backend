@@ -99,8 +99,9 @@ import mongoose from 'mongoose';
          let tempoffer
         if(mongoose.isValidObjectId(req.params.id)) // checking if the user passed ID is valid
         {
+            // let update = await Offer.update({_id:new ObjectId(req.params.id)},{$set:{req.body}})
             tempoffer=await Offer.findById(req.params.id); // checking if offer with this id exist 
-            if(tempoffer==null)
+            if(tempoffer)
             {
                 res.status(404).json({success:0,message:"No offer with this ID available"});
             }

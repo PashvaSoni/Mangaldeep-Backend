@@ -6,7 +6,7 @@ const productvalidationschema={
         name:joi.string()
             .label("Product Name")
             .min(5)
-            .max(50)
+            .max(100)
             .required()
             .regex(/[${};<>`]/, { invert: true })
             .trim()

@@ -34,7 +34,7 @@ const productSchema =new mongoose.Schema({
     description:{
         type:String,
         minlength:[5,"Product Description should be minimum 5 character long."],
-        maxlength:[500,"Product Description should be maximum 500 character long."],
+        maxlength:[600,"Product Description should be maximum 500 character long."],
         required:[true,"Product Description is required"],
     },
     imageurl:{
@@ -81,12 +81,12 @@ const productSchema =new mongoose.Schema({
         required:[true,"Product Metal type is required."]
     },
     metalweight:{
-        type:SchemaTypes.Decimal128,
+        type:Number,
         validate:[greaterThanZero,"Product Metal Weight should be greater than 0."],
         required:[true,"Product Metal Weight is required."]
     },
     grossweight:{
-        type:SchemaTypes.Decimal128,
+        type:Number,
             validate:[
                 {
                     validator:greaterThanZero,

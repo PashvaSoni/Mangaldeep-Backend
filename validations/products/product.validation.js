@@ -1,6 +1,6 @@
 import productvalidationschema from "./product.schema.js";
 
-const productvalidationmiddleware=async(req,res,next)=>{
+const productValidationMiddleware=async(req,res,next)=>{
     try{
         const results=productvalidationschema.product.validate(req.body);
         if(results.error)
@@ -19,4 +19,4 @@ const productvalidationmiddleware=async(req,res,next)=>{
     }
 }
 
-export default productvalidationmiddleware;
+export default productValidationMiddleware;

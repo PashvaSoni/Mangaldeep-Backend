@@ -64,11 +64,13 @@ export function paginate(model) {
       
       let queryObj={}
       let sortObj={}
-
+      let populateString=''
+      
       if(model===Product)
       {
           queryObj=productQueryObject(req);
           sortObj=productSortObject(req);
+          populateString='category class occasion';
       }
 
       const result = {};
@@ -88,7 +90,7 @@ export function paginate(model) {
         result.previousPage=null;
       }
       try {
-        result.results = await model.find(queryObj).sort(sortObj).limit(limit).skip(startIndex);
+        result.results = await model.find(queryObj).sort(sortObj).limit(limit).skip(startIndex).populate(populateString);
         res.paginatedResult = result;
         next();
       } catch (e) {

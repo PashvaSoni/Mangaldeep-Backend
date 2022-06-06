@@ -17,7 +17,7 @@ export const updateProduct = async (req, res) => {
         let tempproduct
         if (mongoose.isValidObjectId(req.params.id)) // checking if the user passed ID is valid
         {
-            tempproduct = await Product.findById(req.params.id); // checking if offer with this id exist 
+            tempproduct = await Product.findById(req.params.id); // checking if Product with this id exist 
             if (tempproduct == null) {
                 res.status(404).json({ success: 0, message: "No Product with this ID available" });
             }
@@ -58,7 +58,7 @@ export const deleteProduct = async (req, res) => {
     try {
         if (mongoose.isValidObjectId(req.params.id)) // checking if the user passed ID is valid
         {
-            tempproduct = await Product.findById(req.params.id); // checking if offer with this id exist 
+            tempproduct = await Product.findById(req.params.id); // checking if Product with this id exist 
             if (tempproduct == null) {
                 res.status(404).json({ success: 0, message: "No Product with this ID available" });
             }
@@ -68,11 +68,11 @@ export const deleteProduct = async (req, res) => {
             }
         }
         else {
-            res.status(400).json({ succes: 0, message: "Invalid Offer-ID", data: null });
+            res.status(400).json({ succes: 0, message: "Invalid Product-ID", data: null });
         }
     }
     catch (err) {
-        res.status(500).json({ succes: 0, message: err.message, data: null })
+        res.status(500).json({ succes: 0, message: err.message, data: null });
     }
 }
 
@@ -102,6 +102,32 @@ export const createProduct = async (req, res) => {
         res.status(200).json({ success: 1, message: "Successfully created product", data: newProduct });
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null })
+        res.status(500).json({ success: 0, message: err.message, data: null });
+    }
+}
+
+// increase like
+export const  updateLikesDislikesPopularity=async(req,res)=>{
+    try{
+        if (mongoose.isValidObjectId(req.params.id)) // checking if the user passed ID is valid
+        {
+            // o stands for operation which is need to perform
+            if(req.params.o==='l')  // if l is given than we need to increase the likes and popularity by 1
+            {
+                await Product.findByIdAndUpdate(req.params.id,{$inc:{likes:1,popularity:1}});
+            }
+            else if(req.params.o==='d') // if d is given than we need to increment the deslikes by 1 
+            {
+                await Product.findByIdAndUpdate(req.params.id,{$inc:{dislikes:1}});
+            }
+            res.sendStatus(200); // not need pass updated likes
+        }
+        else {
+            res.status(400).json({ succes: 0, message: "Invalid Product-ID", data: null });
+        }
+    }
+    catch(err)
+    {
+        res.status(500).json({ success: 0, message: err.message, data: null });
     }
 }

@@ -120,6 +120,11 @@ export const  updateLikesDislikesPopularity=async(req,res)=>{
             {
                 await Product.findByIdAndUpdate(req.params.id,{$inc:{dislikes:1}});
             }
+            else if(req.params.o==='p')
+            {
+                await Product.findByIdAndUpdate(req.params.id,{$inc:{popularity:1}});
+            }
+
             res.sendStatus(200); // not need pass updated likes
         }
         else {

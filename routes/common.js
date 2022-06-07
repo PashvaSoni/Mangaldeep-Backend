@@ -1,5 +1,5 @@
 import express from "express";
-import { createCategory,createClass,createOccasion, getAllCategories, getAllClasses, getAllOccasions } from "../controllers/common.js";
+import { createCategory,createClass,createOccasion, getAllCategories, getAllClasses, getAllOccasions, updateCategory, updateClass, updateOccassion } from "../controllers/common.js";
 import { categoryValidationMiddleware, classValidationMiddleware, occasionValidationMiddleware } from "../validations/common/common.validation.js";
 
 // ------------------------------- Category Routes ----------------------------------------
@@ -11,6 +11,9 @@ categoryRouter.get('/',getAllCategories);
 // create new category route
 categoryRouter.post('/',categoryValidationMiddleware,createCategory);
 
+//update existing category using ID
+categoryRouter.post('/:id',categoryValidationMiddleware,updateCategory);
+
 // ------------------------------- Class Routes ----------------------------------------
 export const classRouter = express.Router();
 
@@ -19,6 +22,9 @@ classRouter.get('/',getAllClasses);
 
 //create new class route
 classRouter.post('/',classValidationMiddleware,createClass);
+
+//update existing class using ID
+classRouter.post('/:id',classValidationMiddleware,updateClass);
 
 
 // ------------------------------- Occasion Routes ----------------------------------------
@@ -29,3 +35,6 @@ occasionRouter.get('/',getAllOccasions);
 
 //create new occasion route
 occasionRouter.post('/',occasionValidationMiddleware,createOccasion);
+
+//update existing occassion using ID
+occasionRouter.post('/:id',occasionValidationMiddleware,updateOccassion);

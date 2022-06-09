@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
  export const getAllOffers= async(req,res) =>{
     try{
         const offers=await Offer.find()
-        res.status(200).json({success:1,message:"Offers retrieved successfully",data:offers})
+        res.status(200).json({success:1,message:"Offers retrieved successfully.",data:offers})
     }
     catch(err){
         res.status(500).json({success:0,message:err.message,data:null})
@@ -24,7 +24,7 @@ import mongoose from 'mongoose';
     })
     try{
         const newOffer=await offer.save()
-        res.status(201).json({success:1,message:"Offer created successfully",data:newOffer})
+        res.status(201).json({success:1,message:"Offer created successfully.",data:newOffer})
     } catch(err){
         //If schema contains more than one unique fields than below condition will not work because we cannot identify which field broke the unique rule
         res.status(400).json({success:0,message:(err.name === 'MongoServerError' && err.code === 11000)?"Offer Title Should be Unique, This Title is already in use.":err.message,data:null})
@@ -40,17 +40,17 @@ import mongoose from 'mongoose';
             tempoffer=await Offer.findById(req.params.id); // checking if offer with this id exist 
             if(tempoffer==null)
             {
-                res.status(404).json({success:0,message:"No offer with this ID available"});
+                res.status(404).json({success:0,message:"No offer with this ID available."});
             }
             else
             {
                 await tempoffer.remove();
-                res.status(200).json({success:1,message:"Offer deleted successfully",data:null})
+                res.status(200).json({success:1,message:"Offer deleted successfully.",data:null})
             }
         }
         else
         {
-            res.status(400).json({succes:0,message:"Invalid Offer-ID",data:null});
+            res.status(400).json({succes:0,message:"Invalid Offer-ID.",data:null});
         }
     }
     catch(err){
@@ -60,7 +60,7 @@ import mongoose from 'mongoose';
 
   // check if date passed by user is valid date object
   const isDate = (date) => {
-    return (new Date(date) !== "Invalid Date") && !isNaN(new Date(date));
+    return (new Date(date) !== "Invalid Date.") && !isNaN(new Date(date));
   }
 
 // get offers by date passed
@@ -78,7 +78,7 @@ import mongoose from 'mongoose';
                     $lte:endate
                 }
             })
-            res.status(200).json({success:1,message:"Offers Retrieved successfully",data:offers});
+            res.status(200).json({success:1,message:"Offers Retrieved successfully.",data:offers});
 
         }
         catch(err)
@@ -89,7 +89,7 @@ import mongoose from 'mongoose';
      else
      {
          // not valid date or not today
-         res.status(400).json({message:"Enter Valid Date in YYYY-MM-DD format"});
+         res.status(400).json({message:"Enter Valid Date in YYYY-MM-DD format."});
      }
  }
 
@@ -101,9 +101,9 @@ import mongoose from 'mongoose';
         {
             // let update = await Offer.update({_id:new ObjectId(req.params.id)},{$set:{req.body}})
             tempoffer=await Offer.findById(req.params.id); // checking if offer with this id exist 
-            if(tempoffer)
+            if(tempoffer===null)
             {
-                res.status(404).json({success:0,message:"No offer with this ID available"});
+                res.status(404).json({success:0,message:"No offer with this ID available."});
             }
             else
             {
@@ -114,16 +114,23 @@ import mongoose from 'mongoose';
                 tempoffer.startdate=req.body.startdate==undefined?tempoffer.startdate:req.body.startdate;
                 tempoffer.enddate=req.body.enddate==undefined?tempoffer.enddate:req.body.enddate;
                 const result=await tempoffer.save();
-                res.status(200).json({success:1,message:"Offer Updated successfully",data:result})
+                res.status(200).json({success:1,message:"Offer Updated successfully.",data:result})
             }
         }
         else
         {
-            res.status(400).json({succes:0,message:"Invalid Offer-ID",data:null});
+            res.status(400).json({succes:0,message:"Invalid Offer-ID.",data:null});
         }
      }
      catch(err)
      {
-        res.status(500).json({success:0,message:err.message,data:null});
+        if(err.name === 'MongoServerError' && err.code === 11000)
+        {
+            res.status(406).json({success:0,message:"Offer Title Should be Unique, This Title is already in use."});
+        }
+        else
+        {
+            res.status(500).json({success:0,message:err.message,data:null});
+        }
      }
  }

@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // get all the products
 export const getAllProduct = async (req, res) => {
     try {
-        res.status(200).json({ success: 1, message: "Products Retrieved Successfully", data: res.paginatedResult })
+        res.status(200).json({ success: 1, message: "Products Retrieved Successfully.", data: res.paginatedResult })
     }
     catch (err) {
         res.status(500).json({ success: 0, message: err.message, data: null });
@@ -19,7 +19,7 @@ export const updateProduct = async (req, res) => {
         {
             tempproduct = await Product.findById(req.params.id); // checking if Product with this id exist 
             if (tempproduct == null) {
-                res.status(404).json({ success: 0, message: "No Product with this ID available" });
+                res.status(404).json({ success: 0, message: "No Product with this ID available." });
             }
             else {
                 tempproduct.name=req.body.name,
@@ -39,15 +39,22 @@ export const updateProduct = async (req, res) => {
                 tempproduct.class=req.body.class
                 tempproduct.occasion=req.body.occasion
                 const result = await tempproduct.save();
-                res.status(200).json({ success: 1, message: "Product Updated successfully", data: result })
+                res.status(200).json({ success: 1, message: "Product Updated successfully.", data: result })
             }
         }
         else {
-            res.status(400).json({ succes: 0, message: "Invalid Product-ID", data: null });
+            res.status(400).json({ succes: 0, message: "Invalid Product-ID.", data: null });
         }
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null });
+        if(err.name === 'MongoServerError' && err.code === 11000)
+        {
+            res.status(406).json({success:0,message:"Product with the given name already exist."});
+        }
+        else
+        {
+            res.status(500).json({success:0,message:err.message,data:null});
+        }
     }
 }
 
@@ -60,15 +67,15 @@ export const deleteProduct = async (req, res) => {
         {
             tempproduct = await Product.findById(req.params.id); // checking if Product with this id exist 
             if (tempproduct == null) {
-                res.status(404).json({ success: 0, message: "No Product with this ID available" });
+                res.status(404).json({ success: 0, message: "No Product with this ID available." });
             }
             else {
                 await tempproduct.remove();
-                res.status(200).json({ success: 1, message: "Product deleted successfully", data: null })
+                res.status(200).json({ success: 1, message: "Product deleted successfully.", data: null })
             }
         }
         else {
-            res.status(400).json({ succes: 0, message: "Invalid Product-ID", data: null });
+            res.status(400).json({ succes: 0, message: "Invalid Product-ID.", data: null });
         }
     }
     catch (err) {
@@ -99,10 +106,17 @@ export const createProduct = async (req, res) => {
             occasion: req.body.occasion
         });
         const newProduct = await temp.save();
-        res.status(200).json({ success: 1, message: "Successfully created product", data: newProduct });
+        res.status(200).json({ success: 1, message: "Product created successfully.", data: newProduct });
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null });
+        if(err.name === 'MongoServerError' && err.code === 11000)
+        {
+            res.status(406).json({success:0,message:"Product with the given name already exist."});
+        }
+        else
+        {
+            res.status(500).json({success:0,message:err.message,data:null});
+        }
     }
 }
 
@@ -128,7 +142,7 @@ export const  updateLikesDislikesPopularity=async(req,res)=>{
             res.sendStatus(200); // not need pass updated likes
         }
         else {
-            res.status(400).json({ succes: 0, message: "Invalid Product-ID", data: null });
+            res.status(400).json({ succes: 0, message: "Invalid Product-ID.", data: null });
         }
     }
     catch(err)

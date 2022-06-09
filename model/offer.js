@@ -15,15 +15,15 @@ const offerSchema=new mongoose.Schema({
     title:{
         type:String,
         required:[true,"Offer Title is required !"],
-        minlength:[5,'Offer Title should be more than 5 characters.'],
-        maxlength:[100, 'Offer Title should be less than 100 characters.'],
+        minlength:[5,'Offer Title should be more than 5 characters !'],
+        maxlength:[100, 'Offer Title should be less than 100 characters.!'],
         unique:true // cant use custom message here since unique is not a validator
     },
     description:{
         type:String,
         required:[true,"Offer Description is required !"],
-        minlength:[10, 'Offer Description should be more than 10 characters.'],
-        maxlength:[250, 'Offer Description should be less than 250 characters.']
+        minlength:[10, 'Offer Description should be more than 10 characters !'],
+        maxlength:[250, 'Offer Description should be less than 250 characters !']
         
     },
     imageurl:{

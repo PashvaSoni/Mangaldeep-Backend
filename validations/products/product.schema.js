@@ -6,6 +6,7 @@ const productvalidationschema={
         name:joi.string()
             .label("Product Name")
             .min(5)
+            .lowercase()
             .max(100)
             .required()
             .regex(/[${};<>`]/, { invert: true })
@@ -17,6 +18,7 @@ const productvalidationschema={
             .label("Product Description")
             .min(10)
             .max(600)
+            .lowercase()
             .required()
             .trim()
             .regex(/[${};<>`]/, { invert: true })
@@ -24,9 +26,16 @@ const productvalidationschema={
                 "string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"
             }),
         imageurl:joi.array()
-            .items(joi.string())
-            .label("Product Image URL")
-            .required(),
+            .items(joi.string()
+                .label("Product Image URL")
+                .trim()
+                .min(5)
+                .max(500)
+            )
+            .label("Product Images")
+            .required()
+            .unique()
+            .min(1),
         registrationdate:joi.date()
             .label("Product Registration Date")
             .iso()

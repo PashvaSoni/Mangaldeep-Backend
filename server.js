@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import offerRouter from './routes/offer.js'
 import productRouter from "./routes/product.js";
 import { categoryRouter, classRouter, occasionRouter } from "./routes/common.js";
+import userRouter from "./routes/users.js";
 
 dotenv.config()
 const app=express()
@@ -36,5 +37,6 @@ app.use('/products',productRouter);
 app.use('/categories',categoryRouter);
 app.use('/classes',classRouter);
 app.use('/occasions',occasionRouter);
+app.use('/users',userRouter);
 
 app.listen(3000,()=>{console.log("server started at port")})

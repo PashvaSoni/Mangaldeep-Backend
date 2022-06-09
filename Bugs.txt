@@ -1,0 +1,6 @@
+1) we are creating a temp object before saving the body to avoid unncessary field passed by the user, but that is not required because that is handled by the joi for example if additional is the unnecessary field than joi will give an error of "additionals is not allowed",
+
+2) In validation folder each validation.js file can be saved to single file in extra.js
+
+3) Gender Enum, Metal Purity Enum etc can be saved to single file in extra folder
+

@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 export const getAllCategories= async(req,res)=>{
     try{
         const results= await productCategory.find();
-        res.status(200).json({success:1,message:"Product Categories Retrieved Successfully",data:results});
+        res.status(200).json({success:1,message:"Product Categories Retrieved Successfully.",data:results});
     }
     catch(err)
     {
@@ -47,7 +47,7 @@ export const updateCategory=async(req,res)=>{
         }
         else
         {
-            res.status(400).json({success:0,message:"Invalid Product Category-ID",data:null});
+            res.status(400).json({success:0,message:"Invalid Product Category-ID.",data:null});
         }
     }
     catch(err)
@@ -69,7 +69,7 @@ export const updateCategory=async(req,res)=>{
 export const getAllClasses= async(req,res)=>{
     try{
         const results= await productClass.find();
-        res.status(200).json({success:1,message:"Product Classes Retrieved Successfully",data:results});
+        res.status(200).json({success:1,message:"Product Classes Retrieved Successfully.",data:results});
     }
     catch(err)
     {
@@ -109,7 +109,7 @@ export const updateClass=async(req,res)=>{
         }
         else
         {
-            res.status(400).json({success:0,message:"Invalid Product Class-ID",data:null});
+            res.status(400).json({success:0,message:"Invalid Product Class-ID.",data:null});
         }
     }
     catch(err)
@@ -131,7 +131,7 @@ export const updateClass=async(req,res)=>{
 export const getAllOccasions= async(req,res)=>{
     try{
         const results= await productOccasion.find();
-        res.status(200).json({success:1,message:"Product Occassions Retrieved Successfully",data:results});
+        res.status(200).json({success:1,message:"Product Occassions Retrieved Successfully.",data:results});
     }
     catch(err)
     {
@@ -171,7 +171,7 @@ export const updateOccassion=async(req,res)=>{
         }
         else
         {
-            res.status(400).json({success:0,message:"Invalid Product Occassion-ID",data:null});
+            res.status(400).json({success:0,message:"Invalid Product Occassion-ID.",data:null});
         }
     }
     catch(err)

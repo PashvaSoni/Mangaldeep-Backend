@@ -1,8 +1,5 @@
-import {mongoose} from "mongoose";
-import  SchemaTypes  from "mongoose";
-import {productCategory,productClass,productOccasion} from './common.js'
+import mongoose from "mongoose";
 
-const GENDER_ENUM = ['men','women','kids','unisex'];
 const METAL_ENUM = ['gold','silver','platinum','imitation'];
 const METAL_PURITY_ENUM = ['18KT','22KT','24KT','100%'];
 
@@ -23,7 +20,7 @@ function greaterThanZero(val) {
       return await productOccasion.exists({_id:val});
   }
 
-const productSchema =new mongoose.Schema({
+const orderSchema=new mongoose.Schema({
     name:{
         type:String,
         minlength:[5,"Product Name should be minimum 5 character long !"],
@@ -45,38 +42,11 @@ const productSchema =new mongoose.Schema({
             message:"Atleast one image for the Product is required !"
         } 
     },
-    likes:{
-        type:Number,
-        default:0,
-        min:[0,"Minimum Product Like should be 0 !"],
-    },
-    dislikes:{
-        type:Number,
-        default:0,
-        min:[0,"Minimum Product Dislikes should be 0 !"]
-    },
-    popularity:{
-        type:Number,
-        default:0,
-        min:[0,"Minimum Product Popularity should be 0 !"],
-    },
-    targetgender:{
-        type:String,
-        // enum:[GENDER_ENUM,"Product Target Gender should be one of 'men', 'women', 'kids' or 'unisex' ."],
-        enum:{
-            values:GENDER_ENUM,
-            message:"Product Target Gender should be one of 'men', 'women', 'kids' or 'unisex' !"},
-        required:[true,"Product Target Gender is required !"]
-    },
-    registrationdate:{
-        type:Date,
-        default:Date
-    },
     metal:{
         type:String,
         enum:{
             values:METAL_ENUM,
-            message:"Product Metal should be one of 'Gold', 'Silver', 'Platinum' or 'Immitation' !"
+            message:"Product Metal should be one of 'Gold', 'Silver', 'Platinum' or 'Immitation'!"
         },
         required:[true,"Product Metal type is required !"]
     },
@@ -90,7 +60,7 @@ const productSchema =new mongoose.Schema({
             validate:[
                 {
                     validator:greaterThanZero,
-                    message:"Product Gross Weight should be more than 0 !"
+                    message:"Product Gross Weight should be greater than 0 !"
                 }
             ],
         // validate:[greaterThanZero,async function greaterThanMetalweight() {
@@ -105,11 +75,11 @@ const productSchema =new mongoose.Schema({
             values:METAL_PURITY_ENUM,
             message:"Product Metal Purity should be one of '18KT', '22KT', '24KT', '100%' !"
         },
-        required:[true,"Product Metal Purity is required.!"]
+        required:[true,"Product Metal Purity is required !"]
     },
     makingcharge:{
         type:Number,
-        validate:[greaterThanZero,"Product Making Charge should be more than 0 !"],
+        min:[0,"Product Making Charge cannot be less than 0 !"],
         required:[true,"Product Making Charge is required !"]
     },
     category:{
@@ -151,13 +121,25 @@ const productSchema =new mongoose.Schema({
                 message:props=>`No Product Occasion with ID : ${props.value} exist !`
             }
         ]
+    },
+    purchasedate:{
+        type:Date,
+        default:Date
+    },
+    purchaseprice:{
+        type:Number,
+        required:[true,"Product Purchasing Price is required !"],
+        min:[0,"Product Purchasing Price cannot be less 0 !"]
+    },
+    discount:{
+        type:Number,
+        max:[100,"Product Discount cannot be more than 100% !"],
+        min:[0,"Product Discount cannot be less than 0% !"],
+        default:0
+    },
+    goldrate:{
+        type:Number,
+        min:[0,"Current Gold Rate cannot be less than 0 !"],
+        required:[0,"Current Gold Rate is required !"]
     }
-
 });
-
-// for try to search keywords in prodct name and description
-productSchema.index({name:'text',description:'text'});
-
-const Product=mongoose.model('Products',productSchema);
-
-export default Product;

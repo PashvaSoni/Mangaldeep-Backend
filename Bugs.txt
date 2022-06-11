@@ -4,3 +4,4 @@
 
 3) Gender Enum, Metal Purity Enum etc can be saved to single file in extra folder
 
+4) Checking

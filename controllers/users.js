@@ -1,11 +1,21 @@
+import { generateHash } from "../extra/helperFunctions.js";
 import Users from "../model/users.js";
 
 //create new user
 export const createUser=async(req,res)=>{
     try{
-        const tempUser=new Users(req.body);
-        const newUser=await tempUser.save()
-        res.status(200).json({success:1,message:"User Created Successfully.",data:newUser});
+        let tempObj=await generateHash(req.body.password);
+        if(tempObj.success)
+        {
+            req.body.password=tempObj.hashPassword;
+            const tempUser=new Users(req.body);
+            const newUser=await tempUser.save()
+            res.status(200).json({success:1,message:"User Created Successfully.",data:newUser});
+        }
+        else
+        {
+            throw tempObj.err;
+        }
     }
     catch(err)
     {

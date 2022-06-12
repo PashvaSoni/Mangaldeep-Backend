@@ -4,6 +4,6 @@ import userValidationMiddleware from "../validations/users/user.validation.js";
 const userRouter = express.Router();
 
 //create new user
-userRouter.post('/',userValidationMiddleware,createUser);
+userRouter.post('/signup',userValidationMiddleware,createUser);
 
 export default userRouter;

@@ -43,19 +43,16 @@ const productvalidationschema={
         likes:joi.number()
             .label("Product Likes")
             .integer() // no floating values
-            .positive()
             .default(0)
             .min(0),
         dislikes:joi.number()
             .label("Product Dislikes")
             .integer()
-            .positive()
             .default(0)
             .min(0),
         popularity:joi.number()
             .label("Product Popularity")
             .integer() // no floating values
-            .positive()
             .default(0)
             .min(joi.ref('likes')),
         targetgender:joi.string()

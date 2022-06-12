@@ -1,6 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
+import bodyParser from "body-parser";
+
 import offerRouter from './routes/offer.js'
 import productRouter from "./routes/product.js";
 import { categoryRouter, classRouter, occasionRouter } from "./routes/common.js";
@@ -14,7 +17,22 @@ const db=mongoose.connection
 db.on('error',(error)=>{console.error(error)})
 db.once('open',()=>console.log("connected to DB")) // this runs when db is connected 
 
-app.use(express.json()) // this is the middleware, middleware is a part of code which runs before passing data to server if data is posted in the request body, 
+// parse application/json, basically parse incoming Request Object as a JSON Object 
+app.use(bodyParser.json());
+
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+
+// you can parse incoming Request Object if object, with nested objects, or generally any type.
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+
+//Setting up cors
+var corsOption = {
+  origin: "*",
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+};
+app.use(cors(corsOption));
 
 
 // the below code helps to remove CORS error... CORS errors comes when the API is hosted on different server
@@ -38,5 +56,10 @@ app.use('/categories',categoryRouter);
 app.use('/classes',classRouter);
 app.use('/occasions',occasionRouter);
 app.use('/users',userRouter);
+
+// page not found error handling  middleware
+app.use("*", (req, res) => {
+    res.status(404).json({success:0,message:"We didn't find what you are looking for !",data:null});    
+});
 
 app.listen(3000,()=>{console.log("server started at port")})

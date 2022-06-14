@@ -1,6 +1,6 @@
 import joi from '@hapi/joi';
 
-const userValidationSchema=joi.object({
+export const userValidationSchema=joi.object({
     name:joi.string()
         .label("User's Name")
         .min(4)
@@ -55,5 +55,3 @@ const userValidationSchema=joi.object({
     
 
 });
-
-export default userValidationSchema;

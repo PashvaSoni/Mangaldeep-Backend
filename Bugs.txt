@@ -7,7 +7,6 @@
 
 
 // MEDIUM PRIORITY
-1) In validation folder each validation.js file can be saved to single file in extra.js
 
 
 // LESS PRIORITY

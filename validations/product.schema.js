@@ -1,8 +1,6 @@
 import joi from '@hapi/joi';
-import commonschema from '../common/common.schema.js'
 
-const productvalidationschema={
-    product:joi.object({
+export const productValidationschema=joi.object({
         name:joi.string()
             .label("Product Name")
             .min(5)
@@ -164,6 +162,4 @@ const productvalidationschema={
         //             .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"})
         //     )
     })
-}
 
-export default productvalidationschema;

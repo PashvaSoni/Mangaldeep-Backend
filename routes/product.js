@@ -1,6 +1,6 @@
 import express from "express";
 import { createProduct, deleteProduct, getAllProduct, updateLikesDislikesPopularity, updateProduct } from "../controllers/product.js";
-import { paginate } from "../extra/middleware.js";
+import { paginate } from "../utils/paginateResults.js";
 import Product from "../model/product.js";
 import productValidationMiddleware from "../validations/products/product.validation.js";
 

@@ -1,13 +1,19 @@
-1) we are creating a temp object before saving the body to avoid unncessary field passed by the user, but that is not required because that is handled by the joi for example if additional is the unnecessary field than joi will give an error of "additionals is not allowed",
-
-2) In validation folder each validation.js file can be saved to single file in extra.js
-
-3) Gender Enum, Metal Purity Enum etc can be saved to single file in extra folder
-
-4) Need to add cors to our backend 
-
-5) refer this link for otp based auth : 
+// HIGH PRIORITY
+1) refer this link for otp based auth : 
     1)https://blog.anam.co/otp-verification-without-using-a-database/
     2)https://dev.to/harshmangalam/mobile-otp-based-authentication-and-authorization-api-using-nodejs-and-mongodb-2hpk
+2) we need to add moongose timestamps in each schema
 
-6) we need to add moongose timestamps in each schema
+
+
+// MEDIUM PRIORITY
+1) In validation folder each validation.js file can be saved to single file in extra.js
+
+
+// LESS PRIORITY
+1) we are creating a temp object before saving the body to avoid unncessary field passed by the user, but that is not required because that is handled by the joi for example if additional is the unnecessary field than joi will give an error of "additionals is not allowed",
+2) Gender Enum, Metal Purity Enum etc can be saved to single file in extra folder
+3) send email using amazon SES : https://betterprogramming.pub/how-to-send-emails-with-node-js-using-amazon-ses-8ae38f6312e4
+ 
+
+

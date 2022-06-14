@@ -1,7 +1,6 @@
 import joi from '@hapi/joi';
 
-const offerValidationSchema={
-    offer:joi.object({
+export const offerValidationSchema=joi.object({
         title:joi.string()
             .label("Offer Title")
             .trim()
@@ -39,10 +38,8 @@ const offerValidationSchema={
             .label("Offer Ending Date")
             .iso()
             .greater(joi.ref('startdate'))
-    })
-};
+    });
 
-export default offerValidationSchema;
 
 // messages: {
 //     'string.alphanum': '{{#label}} must only contain alpha-numeric characters',

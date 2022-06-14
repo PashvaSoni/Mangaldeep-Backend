@@ -1,10 +1,11 @@
 import express from "express";
 import { createUser, sendOTP, verifyOTP } from "../controllers/users.js";
-import userValidationMiddleware from "../validations/users/user.validation.js";
+import { validateBody } from "../utils/bodyValidationMiddleware.js";
+import { userValidationSchema } from "../validations/user.schema.js";
 const userRouter = express.Router();
 
 //create new user
-userRouter.post('/signup',userValidationMiddleware,createUser);
+userRouter.post('/signup',validateBody(userValidationSchema),createUser);
 userRouter.post('/signin/sendOTP',sendOTP);
 userRouter.post('/signin/verifyOTP',verifyOTP);
 

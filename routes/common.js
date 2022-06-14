@@ -1,6 +1,7 @@
 import express from "express";
 import { createCategory,createClass,createOccasion, getAllCategories, getAllClasses, getAllOccasions, updateCategory, updateClass, updateOccassion } from "../controllers/common.js";
-import { categoryValidationMiddleware, classValidationMiddleware, occasionValidationMiddleware } from "../validations/common/common.validation.js";
+import { validateBody } from "../utils/bodyValidationMiddleware.js";
+import { categoryValidationSchema, classValidationSchema, ocassionValidationSchema } from "../validations/common.schema.js";
 
 // ------------------------------- Category Routes ----------------------------------------
 export const categoryRouter = express.Router();
@@ -9,10 +10,10 @@ export const categoryRouter = express.Router();
 categoryRouter.get('/',getAllCategories);
 
 // create new category route
-categoryRouter.post('/',categoryValidationMiddleware,createCategory);
+categoryRouter.post('/',validateBody(categoryValidationSchema),createCategory);
 
 //update existing category using ID
-categoryRouter.post('/:id',categoryValidationMiddleware,updateCategory);
+categoryRouter.post('/:id',validateBody(categoryValidationSchema),updateCategory);
 
 // ------------------------------- Class Routes ----------------------------------------
 export const classRouter = express.Router();
@@ -21,10 +22,10 @@ export const classRouter = express.Router();
 classRouter.get('/',getAllClasses);
 
 //create new class route
-classRouter.post('/',classValidationMiddleware,createClass);
+classRouter.post('/',validateBody(classValidationSchema),createClass);
 
 //update existing class using ID
-classRouter.post('/:id',classValidationMiddleware,updateClass);
+classRouter.post('/:id',validateBody(classValidationSchema),updateClass);
 
 
 // ------------------------------- Occasion Routes ----------------------------------------
@@ -34,7 +35,7 @@ export const occasionRouter = express.Router();
 occasionRouter.get('/',getAllOccasions);
 
 //create new occasion route
-occasionRouter.post('/',occasionValidationMiddleware,createOccasion);
+occasionRouter.post('/',validateBody(ocassionValidationSchema),createOccasion);
 
 //update existing occassion using ID
-occasionRouter.post('/:id',occasionValidationMiddleware,updateOccassion);
+occasionRouter.post('/:id',validateBody(ocassionValidationSchema),updateOccassion);

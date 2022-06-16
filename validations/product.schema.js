@@ -1,8 +1,6 @@
 import joi from '@hapi/joi';
-import commonschema from '../common/common.schema.js'
 
-const productvalidationschema={
-    product:joi.object({
+export const productValidationschema=joi.object({
         name:joi.string()
             .label("Product Name")
             .min(5)
@@ -43,19 +41,16 @@ const productvalidationschema={
         likes:joi.number()
             .label("Product Likes")
             .integer() // no floating values
-            .positive()
             .default(0)
             .min(0),
         dislikes:joi.number()
             .label("Product Dislikes")
             .integer()
-            .positive()
             .default(0)
             .min(0),
         popularity:joi.number()
             .label("Product Popularity")
             .integer() // no floating values
-            .positive()
             .default(0)
             .min(joi.ref('likes')),
         targetgender:joi.string()
@@ -167,6 +162,4 @@ const productvalidationschema={
         //             .messages({"string.pattern.invert.base": `{{#label}} should not contains symbols like ( '$' , '}' , '{' , ';' , '<' , '>' ,`+" '`' )"})
         //     )
     })
-}
 
-export default productvalidationschema;

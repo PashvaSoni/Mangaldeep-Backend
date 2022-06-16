@@ -136,11 +136,12 @@ import mongoose from 'mongoose';
      }
  }
 
- export const deleteByDate=async(date)=>{
+
+ //delete by date
+ export const deleteByDate=async(date)=>{ 
     try {
-        console.log("WORKING");
         if(isDate(date)){
-            await Offer.deleteMany({enddate:date})
+            await Offer.deleteMany({enddate:{$lte:date}})  //this will delete every offer whose enddate is less than given date
             return true
         }
         else

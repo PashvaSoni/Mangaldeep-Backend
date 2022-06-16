@@ -8,12 +8,12 @@ import offerRouter from './routes/offer.js'
 import productRouter from "./routes/product.js";
 import { categoryRouter, classRouter, occasionRouter } from "./routes/common.js";
 import userRouter from "./routes/users.js";
-// import { every24hr } from "./utils/workScheduler.js";
+import { every24hr } from "./utils/workScheduler.js";
 
 dotenv.config()
 const app=express()
 
-// every24hr.start();
+every24hr.start();   //this code is running continuously at every 24 hours
 
 mongoose.connect(process.env.DATABASE_URL)
 const db=mongoose.connection

@@ -1,11 +1,8 @@
 import cron from 'node-cron'
-const { deleteByDate } = require('../controllers/offer')
+import { deleteByDate } from '../controllers/offer.js';
 
-export const every24hr=cron.schedule('* * * * *',()=>{      
+
+export const every24hr=cron.schedule('59 23 * * *',()=>{       //this will schedule function running process each 24 hours
     //your callback function will be here
-    // deleteByDate("2022-06-17")
-    console.log("log");
-    },
-    {
-    scheduled: false
+    deleteByDate(new Date().toISOString())
 })

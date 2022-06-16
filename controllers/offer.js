@@ -1,6 +1,7 @@
 import Offer from'../model/offer.js';
 import mongoose from 'mongoose';
 
+
 // get all the offers
  export const getAllOffers= async(req,res) =>{
     try{
@@ -133,4 +134,20 @@ import mongoose from 'mongoose';
             res.status(500).json({success:0,message:err.message,data:null});
         }
      }
+ }
+
+ export const deleteByDate=async(date)=>{
+    try {
+        console.log("WORKING");
+        if(isDate(date)){
+            await Offer.deleteMany({enddate:date})
+            return true
+        }
+        else
+        {
+            throw "Invalid Date provided"
+        }
+    } catch (err) {
+        throw err
+    }
  }

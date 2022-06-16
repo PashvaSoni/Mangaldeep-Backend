@@ -3,6 +3,8 @@
     1)https://blog.anam.co/otp-verification-without-using-a-database/
     2)https://dev.to/harshmangalam/mobile-otp-based-authentication-and-authorization-api-using-nodejs-and-mongodb-2hpk
 2) we need to add moongose timestamps in each schema
+3) Need to changes name of routes as per the opeartion name
+4) Add fucntionality to automatically delete the offer after endDate
 
 
 

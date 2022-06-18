@@ -3,17 +3,46 @@
     1)https://blog.anam.co/otp-verification-without-using-a-database/
     2)https://dev.to/harshmangalam/mobile-otp-based-authentication-and-authorization-api-using-nodejs-and-mongodb-2hpk
 2) we need to add moongose timestamps in each schema
-
+3) Need to changes name of routes as per the opeartion name
+4) Role and Permission fucntionality
 
 
 // MEDIUM PRIORITY
 1) need to return res in controllers
 2) Check getofferbydate function in controllers
+3) In paginate middleware, we have added searching fucntionality based on class,occasion etc, but that searching only happens with one values specified, what if i want a product with multiple values of same field eg all product with class as '1st class' and '2nd class'.
 
 // LESS PRIORITY
 1) we are creating a temp object before saving the body to avoid unncessary field passed by the user, but that is not required because that is handled by the joi for example if additional is the unnecessary field than joi will give an error of "additionals is not allowed",
 2) Gender Enum, Metal Purity Enum etc can be saved to single file in extra folder
 3) send email using amazon SES : https://betterprogramming.pub/how-to-send-emails-with-node-js-using-amazon-ses-8ae38f6312e4
+4) Logging fucntionality 
+    Link : https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
  
+//Security
+=> Use strict mode :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#use-strict-mode
+=> Use appropriate security headers :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#use-appropriate-security-headers
+=> Prevent HTTP Parameter Pollution :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#prevent-http-parameter-pollution
+=> Every email in res is allowing `, ', $ etc values which should not be the case. 
+   link : https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html#email-address-validation
+=> Stay away from evil regexes :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#stay-away-from-evil-regexes
+=> Monitor the event loop :
+    link :https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#monitor-the-event-loop
+=> Take precautions against brute-forcing :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#take-precautions-against-brute-forcing
+    Use Rate Limiter : https://libraries.io/npm/rate-limiter
+=> Use Anti-CSRF tokens : 
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#use-anti-csrf-tokens
+=> Only return what is necessary :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#only-return-what-is-necessary
+=> Use object property descriptors :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#use-object-property-descriptors
+=> Set cookie flags appropriately :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#set-cookie-flags-appropriately
 
+==> https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 

@@ -4,10 +4,11 @@ import { paginate } from "../utils/paginateResults.js";
 import Product from "../model/product.js";
 import { validateBody } from "../utils/bodyValidationMiddleware.js";
 import { productValidationschema } from "../validations/product.schema.js";
+import { authVerify } from "../utils/create-verify-JWT.js";
 
 const productRouter=express.Router();
 
-productRouter.get('/',paginate(Product),getAllProduct);
+productRouter.get('/',authVerify,paginate(Product),getAllProduct);
 
 productRouter.delete('/:id',deleteProduct)
 

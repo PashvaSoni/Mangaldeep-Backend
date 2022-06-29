@@ -5,6 +5,10 @@
 2) we need to add moongose timestamps in each schema
 3) Need to changes name of routes as per the opeartion name
 4) Role and Permission fucntionality
+5) Make sure email id is unique for each user
+6) Optimaizing the response time by using CPU Cores : 
+    link :https://medium.com/tech-tajawal/process-manager-pm2-performance-optimization-part-ii-6ca8e431a578
+    
 
 
 // MEDIUM PRIORITY
@@ -20,6 +24,16 @@
     Link : https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
  
 //Security
+==> HTTP Return Code
+    link : https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#http-return-code
+=> JWT Security :
+    //link1 : https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html#none-hashing-algorithm
+    link2 : https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html#token-sidejacking
+    link3 : https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html#no-built-in-token-revocation-by-the-user
+    link4 : https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html#token-information-disclosure
+    link5 : https://cheatsheetseries.owasp.org/cheatsheets/JSON_Web_Token_for_Java_Cheat_Sheet.html#token-storage-on-client-side
+=> Validate content types :
+    link : https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#validate-content-types
 => Use strict mode :
     link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#use-strict-mode
 => Use appropriate security headers :
@@ -45,4 +59,5 @@
     link : https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#set-cookie-flags-appropriately
 
 ==> https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+==> https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
 

@@ -1,3 +1,5 @@
+"use strict";
+
 import mongoose from "mongoose";
 
 // for calculating the one month later date from current date
@@ -43,7 +45,7 @@ const offerSchema=new mongoose.Schema({
         default:oneMonthFromNow
     }
 
-})
+},{ timestamps: true })
 
 const Offer=mongoose.model('Offer',offerSchema);
 export default Offer;

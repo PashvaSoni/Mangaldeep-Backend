@@ -1,3 +1,5 @@
+"use strict";
+
 import Product from "../model/product.js";
 
 function productQueryObject(req)

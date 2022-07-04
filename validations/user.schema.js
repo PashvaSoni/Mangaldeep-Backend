@@ -1,6 +1,8 @@
+"use strict";
+
 import joi from '@hapi/joi';
 
-export const userValidationSchema=joi.object({
+export const createUserValidationSchema=joi.object({
     name:joi.string()
         .label("User's Name")
         .min(4)
@@ -54,4 +56,21 @@ export const userValidationSchema=joi.object({
         )
     
 
+});
+
+export const loginUserValidationSchema=joi.object({
+    phonenumber:joi.string()
+        .label("User's Phone Number")
+        .required()
+        .regex(/^(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?$/) // regex for handling phonw number with country codes if passed
+        .messages({
+            "string.pattern.base": `{{#label}} is not valid`
+        })
+        .trim(),
+    password:joi.string()
+        .label("User's Password")
+        .max(128)
+        .min(8)
+        .trim()
+        .required(),
 });

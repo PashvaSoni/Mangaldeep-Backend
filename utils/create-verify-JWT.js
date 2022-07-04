@@ -1,76 +1,79 @@
+"use strict";
+
 import jwt from 'jsonwebtoken';
 import { decryptData, encryptData } from './helperFunctions.js';
 
-export const signJWT=async(payload,secretkey,expiresIn)=>{
+export const signJWT = async (payload, secretkey, expiresIn) => {
     // signs JWT and encryt it
-    try{
-        const temp=jwt.sign(payload,secretkey,{algorithm:'HS256',expiresIn:expiresIn});
-        console.log(temp);
-        console.log("--");
-        return await encryptData(temp);
+    try {
+        return await encryptData(jwt.sign(payload, secretkey, { algorithm: 'HS256', expiresIn: expiresIn }));
     }
-    catch(err)
-    {
-        err.name="JWT Signing Error";
-        throw {name:"JWT Signing Error",message:err};
+    catch (err) {
+        err.name = "JWT Signing Error";
+        throw { name: "JWT Signing Error", message: err };
     }
 }
 
-export const verifyJWT=async(data,secretkey)=>{
+export const verifyJWT = async (data, secretkey) => {
     //decrypt it verify JWT
-    try{
+    try {
         //decrypt token first
-        console.log(await decryptData(data));
-        return jwt.verify(await decryptData(data),secretkey,function(error,decode){
-            if(error)
-            {
-                return {success:0,value:null}
+        return jwt.verify(await (await decryptData(data)).replaceAll(`"`, ''), secretkey, function (error, decode) {
+            if (error) {
+                return { success: 0, value: error.message }
             }
-            else
-            {
-                return {success:1,value:decode};
+            else {
+                return { success: 1, value: decode };
             }
         });
-    }catch(err)
-    {
-        err.name="JWT Verifying Error";
-        throw {name:"JWT Verifying Error",message:err};
+    } catch (err) {
+        err.name = "JWT Verifying Error";
+        throw { name: "JWT Verifying Error", message: err };
     }
 }
 
-export const decodeJwt=async()=>{
-    //function is to decrypt the encrypted payload and return original payload back
-}
-
-export const authVerify=async(req,res,next)=>{
+export const authVerify = async (req, res, next) => {
     // middleware
-    //https://blog.devgenius.io/simplified-implementation-of-access-and-refresh-tokens-on-a-node-express-mongodb-backend-server-2b251975c21f
-    try{
-        let act_cookie= req.cookies.act;
-        if(!act_cookie)
-        {
-            return res.status(403).json({success:0,message:"Session Timeout..",data:null});
-        }
-        else
-        {
-            console.log("entered")
-            // check if refresh token is black-listed
-            let temp=(await verifyJWT(act_cookie,process.env.JWT_ACCESSTOKEN_KEY));
-            if(temp.success)
-            {
-                console.log("success",temp.decode);
+    try {
+        const act_cookie = req.cookies.act;
+        if (!act_cookie) {
+            const rct_cookie = req.cookies.rct;
+            if (!rct_cookie) {
+                return res.status(403).json({ success: 0, message: "Unauthorized access", data: null });
             }
-            else
-            {
-                console.log("fucked");
-            }      
-            console.log("leaving");     
-            // next();
+            else {
+                const temp = await (verifyJWT(rct_cookie, process.env.JWT_REFRESHTOKEN_KEY))
+                // check if refresh token is black-listed
+                if (temp.success) {
+                    req.decode = temp.value;
+                    const payload = { id: temp.value.id };
+                    const accessToken = await signJWT(payload, process.env.JWT_ACCESSTOKEN_KEY, 18000) // access token is valid for 30 mins
+                    res.cookie(`act`, `${accessToken}`, {
+                        maxAge: 18000, // access token is valid for 30 mins only
+                        secure:true, // so that cookies are sent only if domain is HTTPS
+                        httpOnly: true, // so that JS cannot access it 
+                        sameSite: true, // so that cookies are sent to our domain only
+                    })
+                    next();
+                }
+                else {
+                    return res.status(401).json({ success: 0, message: "Unauthorized access", data: null });
+                }
+            }
+        }
+        else {
+            const temp = (await verifyJWT(act_cookie, process.env.JWT_ACCESSTOKEN_KEY));
+            if (temp.success) {
+                req.decode = temp.value;
+                next();
+            }
+            else {
+                return res.status(401).json({ success: 0, message: "Unauthorized access", data: null });
+            }
         }
     }
-    catch(err)
-    {
-        return res.status(500).json({success:0,message:err,data:null});
+    catch (err) {
+        return res.status(500).json({ success: 0, message: err, data: null });
     }
 
 }

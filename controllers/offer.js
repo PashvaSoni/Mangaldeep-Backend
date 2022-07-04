@@ -1,3 +1,5 @@
+"use strict";
+
 import Offer from'../model/offer.js';
 import mongoose from 'mongoose';
 

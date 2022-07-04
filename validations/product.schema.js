@@ -1,3 +1,5 @@
+"use strict";
+
 import joi from '@hapi/joi';
 
 export const productValidationschema=joi.object({

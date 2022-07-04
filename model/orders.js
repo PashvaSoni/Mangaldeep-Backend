@@ -1,3 +1,5 @@
+"use strict";
+
 import mongoose from "mongoose";
 
 const METAL_ENUM = ['gold','silver','platinum','imitation'];
@@ -142,4 +144,4 @@ const orderSchema=new mongoose.Schema({
         min:[0,"Current Gold Rate cannot be less than 0 !"],
         required:[0,"Current Gold Rate is required !"]
     }
-});
+},{ timestamps: true });

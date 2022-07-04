@@ -1,3 +1,5 @@
+"use strict";
+
 import express from "express";
 import { getAllOffers, createOffer, deleteOffer, getOfferByDate, updateOffer } from '../controllers/offer.js'
 import { validateBody } from "../utils/bodyValidationMiddleware.js";

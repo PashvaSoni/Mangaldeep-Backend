@@ -24,6 +24,7 @@
     Link : https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html
  
 //Security
+==> http://expressjs.com/en/api.html#res.append
 ==> HTTP Return Code
     link : https://cheatsheetseries.owasp.org/cheatsheets/REST_Security_Cheat_Sheet.html#http-return-code
 => JWT Security :
@@ -60,4 +61,5 @@
 
 ==> https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
 ==> https://auth0.com/blog/critical-vulnerabilities-in-json-web-token-libraries/
+
 

@@ -1,3 +1,5 @@
+"use strict";
+
 import { productCategory, productClass, productOccasion } from "../model/common.js";
 import mongoose from "mongoose";
 // ------------------------------- Category Controllers ---------------------------------

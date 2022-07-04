@@ -1,3 +1,5 @@
+"use strict";
+
 import {mongoose} from "mongoose";
 import  SchemaTypes  from "mongoose";
 import {productCategory,productClass,productOccasion} from './common.js'
@@ -153,7 +155,7 @@ const productSchema =new mongoose.Schema({
         ]
     }
 
-});
+},{ timestamps: true });
 
 // for try to search keywords in prodct name and description
 productSchema.index({name:'text',description:'text'});

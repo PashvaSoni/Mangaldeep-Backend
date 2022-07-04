@@ -1,3 +1,5 @@
+"use strict";
+
 import mongoose from "mongoose";
 
 const userSchema=new mongoose.Schema({
@@ -42,7 +44,7 @@ const userSchema=new mongoose.Schema({
         type:[mongoose.Schema.Types.ObjectId],
         ref:"Orders"
     }
-});
+},{ timestamps: true });
 
 const Users=mongoose.model('Users',userSchema);
 export default Users;

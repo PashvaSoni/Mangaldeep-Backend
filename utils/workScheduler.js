@@ -1,3 +1,4 @@
+"use strict";
 import cron from 'node-cron'
 import { deleteByDate } from '../controllers/offer.js';
 

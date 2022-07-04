@@ -1,3 +1,5 @@
+"use strict";
+
 import express from "express";
 import { createProduct, deleteProduct, getAllProduct, updateLikesDislikesPopularity, updateProduct } from "../controllers/product.js";
 import { paginate } from "../utils/paginateResults.js";

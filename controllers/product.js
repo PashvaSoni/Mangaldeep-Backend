@@ -1,3 +1,5 @@
+"use strict";
+
 import Product from "../model/product.js";
 import mongoose from "mongoose";
 
@@ -111,7 +113,7 @@ export const createProduct = async (req, res) => {
     catch (err) {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product with the given name already exist."});
+            res.status(406).json({success:0,message:"Product with the given name already exist.",data:null});
         }
         else
         {

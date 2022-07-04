@@ -1,3 +1,5 @@
+"use strict";
+
 import mongoose from "mongoose";
 
 const categorySchema=new mongoose.Schema({
@@ -8,7 +10,7 @@ const categorySchema=new mongoose.Schema({
         required:[true,"Category Name is required."],
         unique:true
     }
-});
+},{ timestamps: true });
 
 const classSchema=new mongoose.Schema({
     name:{
@@ -18,7 +20,7 @@ const classSchema=new mongoose.Schema({
         required:[true,"Class Name is required."],
         unique:true
     }
-});
+},{ timestamps: true });
 
 const occasionSchema=new mongoose.Schema({
     name:{
@@ -28,7 +30,7 @@ const occasionSchema=new mongoose.Schema({
         required:[true,"Occasion Name is required."],
         unique:true
     }
-})
+},{ timestamps: true })
 
 export const productCategory=mongoose.model('Categories',categorySchema);
 

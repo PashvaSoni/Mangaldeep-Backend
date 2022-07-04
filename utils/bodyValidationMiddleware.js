@@ -1,3 +1,5 @@
+"use strict";
+
 export function validateBody(joiSchema){
     return async(req,res,next)=>{
         try{

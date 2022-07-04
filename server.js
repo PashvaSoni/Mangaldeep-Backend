@@ -1,3 +1,5 @@
+"use strict";
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -11,6 +13,7 @@ import productRouter from "./routes/product.js";
 import { categoryRouter, classRouter, occasionRouter } from "./routes/common.js";
 import userRouter from "./routes/users.js";
 import { every24hr } from "./utils/workScheduler.js";
+import { securityValidationMiddleware } from "./utils/securityValidationMiddleware.js";
 
 dotenv.config()
 const app=express()
@@ -19,6 +22,7 @@ app.use(cookieParser());
 app.use(bodyParser.json()); // parse application/json, basically parse incoming Request Object as a JSON Object 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true })); // you can parse incoming Request Object if object, with nested objects, or generally any type.
+
 
 app.use(helmet());
 
@@ -54,9 +58,7 @@ const db=mongoose.connection
 db.on('error',(error)=>{console.error(error)})
 db.once('open',()=>console.log("connected to DB")) // this runs when db is connected 
 
-
-
-app.use('/offers',offerRouter);
+app.use('/offers',securityValidationMiddleware,offerRouter);
 app.use('/products',productRouter);
 app.use('/categories',categoryRouter);
 app.use('/classes',classRouter);

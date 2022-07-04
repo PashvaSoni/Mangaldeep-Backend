@@ -1,3 +1,5 @@
+"use strict";
+
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import dotenv from "dotenv";

@@ -1,3 +1,5 @@
+"use strict";
+
 import express from "express";
 import { createCategory,createClass,createOccasion, getAllCategories, getAllClasses, getAllOccasions, updateCategory, updateClass, updateOccassion } from "../controllers/common.js";
 import { validateBody } from "../utils/bodyValidationMiddleware.js";

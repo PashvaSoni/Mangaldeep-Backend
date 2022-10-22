@@ -28,8 +28,8 @@ app.use(helmet());
 
 // Setting up cors
 var corsOption = {
-  origin: "http://localhost:5500", // for now use * but in production allow only specified origin to pass (react-admin.com)
-  methods: 'GET,HEAD,PATCH,POST,DELETE',
+  origin: '*', // for now use * but in production allow only specified origin to pass (react-admin.com)
+  methods: 'GET,HEAD,PATCH,POST,DELETE,PUT',
   credentials: true,
   exposedHeaders: ['x-auth-token']
 };
@@ -38,7 +38,7 @@ app.use(cors(corsOption));
 
 // the below code helps to remove CORS error... CORS errors comes when the API is hosted on different server
 // app.use((req,res,next)=>{
-//     res.header('Access-Control-Allow-Origin',"*"); // changes this for security purpose * will allow anyone to access this API
+//     res.header('Access-Control-Allow-Origin',"http://localhost:3001"); // changes this for security purpose * will allow anyone to access this API
 //     res.header("Access-Control-Allow-Headers",
 //     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
 //     );

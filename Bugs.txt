@@ -12,7 +12,9 @@
 
 
 // MEDIUM PRIORITY
-1) need to return res in controllers
+* 1) need to return res in controllers 
+1.1) if you haven't signed-in and you go to logout route than also it is saying logout successfull, that should not be the case, it should given message you are not signed in
+1.2) Update Categrory response does not contains data field
 2) Check getofferbydate function in controllers
 3) In paginate middleware, we have added searching fucntionality based on class,occasion etc, but that searching only happens with one values specified, what if i want a product with multiple values of same field eg all product with class as '1st class' and '2nd class'.
 

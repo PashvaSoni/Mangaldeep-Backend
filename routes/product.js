@@ -1,7 +1,7 @@
 "use strict";
 
 import express from "express";
-import { createProduct, deleteProduct, getAllProduct, updateLikesDislikesPopularity, updateProduct } from "../controllers/product.js";
+import { createProduct, deleteProduct, getAllProduct, testing, updateLikesDislikesPopularity, updateProduct } from "../controllers/product.js";
 import { paginate } from "../utils/paginateResults.js";
 import Product from "../model/product.js";
 import { validateBody } from "../utils/bodyValidationMiddleware.js";
@@ -10,7 +10,7 @@ import { authVerify } from "../utils/create-verify-JWT.js";
 
 const productRouter=express.Router();
 
-productRouter.get('/',authVerify,paginate(Product),getAllProduct);
+productRouter.get('/',paginate(Product),getAllProduct,testing);
 
 productRouter.delete('/:id',deleteProduct)
 

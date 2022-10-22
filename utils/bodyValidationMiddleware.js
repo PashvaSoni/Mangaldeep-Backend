@@ -6,7 +6,7 @@ export function validateBody(joiSchema){
             const result =await joiSchema.validate(req.body);
             if(result.error)
             {
-                res.status(422).json({success:0,message:result.error.details[0].message.replaceAll('\"',''),data:null});
+                return res.status(422).json({success:0,message:result.error.details[0].message.replaceAll('\"',''),data:null});
             }
             else{
                 req.body=result.value;
@@ -15,7 +15,7 @@ export function validateBody(joiSchema){
         }
         catch(err)
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }

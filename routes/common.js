@@ -15,7 +15,7 @@ categoryRouter.get('/',getAllCategories);
 categoryRouter.post('/',validateBody(categoryValidationSchema),createCategory);
 
 //update existing category using ID
-categoryRouter.post('/:id',validateBody(categoryValidationSchema),updateCategory);
+categoryRouter.put('/:id',validateBody(categoryValidationSchema),updateCategory);
 
 // ------------------------------- Class Routes ----------------------------------------
 export const classRouter = express.Router();

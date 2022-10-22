@@ -39,10 +39,10 @@ export const createUser = async (req, res) => {
     }
     catch (err) {
         if (err.name === 'MongoServerError' && err.code === 11000) {
-            res.status(406).json({ success: 0, message: "User is already registered." });
+            return res.status(406).json({ success: 0, message: "User is already registered." });
         }
         else {
-            res.status(500).json({ success: 0, message: err.message, data: null });
+            return res.status(500).json({ success: 0, message: err.message, data: null });
         }
     }
 }
@@ -50,23 +50,25 @@ export const createUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     try {
         const { phonenumber, password } = req.body;
-        const validUser = await Users.findOne({ phonenumber: phonenumber }).select({ email: 1, phonenumber: 1, password: 1 });
+        const validUser = await Users.findOne({ phonenumber: phonenumber }).select({ email: 1, phonenumber: 1, password: 1, name: 1 });
         if (validUser != null) {
             const check = await compareHash(password, validUser.password);
             if (check) {
                 const payload = {
                     id: validUser._id,
+                    phonenumber:phonenumber,
+                    name:validUser.name
                     //enter more details has per you requirements in future
                 }
                 const accessToken = await signJWT(payload, process.env.JWT_ACCESSTOKEN_KEY, 18000) // access token is valid for 30 mins
                 const refreshToken = await signJWT(payload, process.env.JWT_REFRESHTOKEN_KEY, '7d') // refresh token are valid for 7 days
                 //accessToken
-                res.cookie(`act`, `${accessToken}`, {
-                    maxAge: 18000, // access token is valid for 30 mins only
-                    secure: true, // so that cookies are sent only if domain is HTTPS
-                    httpOnly: true, // so that JS cannot access it 
-                    sameSite: true, // so that cookies are sent to our domain only
-                })
+                // res.cookie(`act`, `${accessToken}`, {
+                //     maxAge: 18000, // access token is valid for 30 mins only
+                //     secure: true, // so that cookies are sent only if domain is HTTPS
+                //     httpOnly: true, // so that JS cannot access it 
+                //     sameSite: true, // so that cookies are sent to our domain only
+                // })
                 //refreshToken
                 res.cookie(`rct`, `${refreshToken}`, {
                     expires: new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)), // refresh token is valid for 7 days only
@@ -75,18 +77,18 @@ export const loginUser = async (req, res) => {
                     sameSite: true, // so that cookies are sent to our domain only
                 })
 
-                res.status(200).json({ success: 1, message: "User Authenticated", data: {} });
+                res.status(200).json({ success: 1, message: "User Authenticated", data: {token:accessToken,userinfo:payload} });
             }
             else {
-                res.status(401).json({ success: 0, message: "Wrong or no authentication username/password provided.", data: null });
+                return res.status(401).json({ success: 0, message: "Wrong or no authentication username/password provided.", data: null });
             }
         }
         else {
-            res.status(401).json({ success: 0, message: "Wrong or no authentication username/password provided.", data: null });
+            return res.status(401).json({ success: 0, message: "Wrong or no authentication username/password provided.", data: null });
         }
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null });
+        return res.status(500).json({ success: 0, message: err.message, data: null });
     }
 }
 
@@ -117,12 +119,12 @@ export const sendOTP = async (req, res) => {
         else {
 
             // if no user with given phone number exist
-            res.status(404).json({ success: 0, message: "User does not exist", data: null });
+            return res.status(404).json({ success: 0, message: "User does not exist", data: null });
 
         }
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null });
+        return res.status(500).json({ success: 0, message: err.message, data: null });
     }
 }
 
@@ -143,7 +145,7 @@ export const verifyOTP = async (req, res) => {
         }
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null });
+        return res.status(500).json({ success: 0, message: err.message, data: null });
     }
 }
 
@@ -166,7 +168,7 @@ export const logoutUser = (req, res) => {
         res.status(200).json({ success: 1, message: "User Logged-out Successfully", data: null });
     }
     catch (err) {
-        res.status(500).json({ success: 0, message: err.message, data: null });
+        return res.status(500).json({ success: 0, message: err.message, data: null });
     }
 
 }

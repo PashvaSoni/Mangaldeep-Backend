@@ -63,6 +63,7 @@ export const authVerify = async (req, res, next) => {
         }
         else {
             const temp = (await verifyJWT(act_cookie, process.env.JWT_ACCESSTOKEN_KEY));
+            //check if it contains refresh token, if not than mark it as unauthorized
             if (temp.success) {
                 req.decode = temp.value;
                 next();

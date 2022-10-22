@@ -12,7 +12,7 @@ export const getAllCategories= async(req,res)=>{
     }
     catch(err)
     {
-        res.status(500).json({success:0,message:err.message,data:null});
+        return res.status(500).json({success:0,message:err.message,data:null});
     }
 }
 
@@ -30,11 +30,11 @@ export const createCategory =async(req,res)=>{
     {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product Category with the given name already exist."});
+            return res.status(406).json({success:0,message:"Product Category with the given name already exist."});
         }
         else
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }
@@ -49,18 +49,44 @@ export const updateCategory=async(req,res)=>{
         }
         else
         {
-            res.status(400).json({success:0,message:"Invalid Product Category-ID.",data:null});
+            return res.status(400).json({success:0,message:"Invalid Product Category-ID.",data:null});
         }
     }
     catch(err)
     {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product Category with the given name already exist."});
+            return res.status(406).json({success:0,message:"Product Category with the given name already exist."});
         }
         else
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
+        }
+    }
+}
+
+// delete category by ID
+export const deleteCategory=async(req,res)=>{
+    try{
+        if (mongoose.isValidObjectId(req.params.id)) // checking if the ID passed is valid ID
+        {
+            const temp=await productCategory.findByIdAndUpdate(req.params.id,{name:req.body.name},{new:true});
+            res.status(200).json({success:1,message:"Product Category updated successfully."});
+        }
+        else
+        {
+            return res.status(400).json({success:0,message:"Invalid Product Category-ID.",data:null});
+        }
+    }
+    catch(err)
+    {
+        if(err.name === 'MongoServerError' && err.code === 11000)
+        {
+            return res.status(406).json({success:0,message:"Product Category with the given name already exist."});
+        }
+        else
+        {
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }
@@ -75,7 +101,7 @@ export const getAllClasses= async(req,res)=>{
     }
     catch(err)
     {
-        res.status(500).json({success:0,message:err.message,data:null});
+        return res.status(500).json({success:0,message:err.message,data:null});
     }
 }
 
@@ -92,11 +118,11 @@ export const createClass =async(req,res)=>{
     {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product Class with the given name already exist."});
+            return res.status(406).json({success:0,message:"Product Class with the given name already exist."});
         }
         else
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }
@@ -111,18 +137,18 @@ export const updateClass=async(req,res)=>{
         }
         else
         {
-            res.status(400).json({success:0,message:"Invalid Product Class-ID.",data:null});
+            return res.status(400).json({success:0,message:"Invalid Product Class-ID.",data:null});
         }
     }
     catch(err)
     {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product Class with the given name already exist."});
+            return res.status(406).json({success:0,message:"Product Class with the given name already exist."});
         }
         else
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }
@@ -137,7 +163,7 @@ export const getAllOccasions= async(req,res)=>{
     }
     catch(err)
     {
-        res.status(500).json({success:0,message:err.message,data:null});
+        return res.status(500).json({success:0,message:err.message,data:null});
     }
 }
 
@@ -154,11 +180,11 @@ export const createOccasion =async(req,res)=>{
     {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product Occasion with the given name already exist."});
+            return res.status(406).json({success:0,message:"Product Occasion with the given name already exist."});
         }
         else
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }
@@ -173,18 +199,18 @@ export const updateOccassion=async(req,res)=>{
         }
         else
         {
-            res.status(400).json({success:0,message:"Invalid Product Occassion-ID.",data:null});
+            return res.status(400).json({success:0,message:"Invalid Product Occassion-ID.",data:null});
         }
     }
     catch(err)
     {
         if(err.name === 'MongoServerError' && err.code === 11000)
         {
-            res.status(406).json({success:0,message:"Product Occassion with the given name already exist."});
+            return res.status(406).json({success:0,message:"Product Occassion with the given name already exist."});
         }
         else
         {
-            res.status(500).json({success:0,message:err.message,data:null});
+            return res.status(500).json({success:0,message:err.message,data:null});
         }
     }
 }
